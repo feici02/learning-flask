@@ -5,6 +5,7 @@ from forms import SignupForm
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/learningflask'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
 db.init_app(app)
 
 app.secret_key = "development-key"
@@ -28,7 +29,8 @@ def signup():
       newuser = User(form.first_name.data, form.last_name.data, form.email.data, form.password.data)
       db.session.add(newuser)
       db.session.commit()
-      return 'Success!'
+      #return 'Success!'
+      return render_template("success.html", message="Sign up is completed.")
 
   elif request.method == "GET":
     return render_template('signup.html', form=form)
